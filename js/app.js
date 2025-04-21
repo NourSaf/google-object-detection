@@ -22,7 +22,7 @@ async function initializeObjectDetector() {
           //MODEL PATH, You can also download it and select the local path to the directory 
           modelAssetPath:`https://storage.googleapis.com/mediapipe-tasks/object_detector/efficientdet_lite0_uint8.tflite`
         },
-        scoreThreshold: 0.2,
+        scoreThreshold: 0.5,
         runningMode: "IMAGE"
     });
     console.log("Model Loaded");
@@ -33,7 +33,7 @@ async function initializeObjectDetector() {
   } catch (error) {
     console.error("Error initializing object detector:", error);
   }
-}_
+}
 
 function performDetection(){
   const imageContainer = document.getElementById("image");
@@ -41,9 +41,5 @@ function performDetection(){
   const detections = objectDetector.detect(imageElement);
   console.log("Detections:", detections);
 }
-
-
-
-
 
 initializeObjectDetector();
