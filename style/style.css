@@ -1,0 +1,26 @@
+#image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;    
+  gap: 20px;
+}
+
+.detected-image{
+  height: 350px;
+  
+}
+
+#imgs-container{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 20px;
+}
+
+#imgs-container img{
+  height: 350px;
+}
