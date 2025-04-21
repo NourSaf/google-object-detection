@@ -30,11 +30,6 @@ async function initializeObjectDetector() {
 // Function to perform object detection
 function performDetection() {
   const imageContainer = document.getElementById("image");
-  imageContainer.style.display = "flex";
-  imageContainer.style.justifyContent = "center";
-  imageContainer.style.alignItems = "center";
-  imageContainer.style.height = "100vh";
-  imageContainer.style.flexDirection = "column";
 
   const imageElement = imageContainer.querySelector("img");
   if (!imageElement) {
