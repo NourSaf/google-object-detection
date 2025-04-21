@@ -30,65 +30,69 @@ async function initializeObjectDetector() {
 // Function to perform object detection
 function performDetection() {
   const imageContainer = document.getElementById("image");
+  imageContainer.style.display = "flex";
+  imageContainer.style.justifyContent = "center";
+  imageContainer.style.alignItems = "center";
+  imageContainer.style.height = "100vh";
+  imageContainer.style.flexDirection = "column";
+
   const imageElement = imageContainer.querySelector("img");
-  
   if (!imageElement) {
     console.error("No image element found!");
     return;
   }
-  
-  // Make sure image is loaded before detection
-  if (imageElement.complete) {
-    const detections = objectDetector.detect(imageElement);
-    console.log("Detections:", detections);
-    
-    // Optional: Visualize the detections
-    displayDetections(imageElement, detections);
-  } else {
-    imageElement.onload = () => {
-      const detections = objectDetector.detect(imageElement);
-      console.log("Detections:", detections);
-      
-      displayDetections(imageElement, detections);
-    };
-  }
+  displayDetections(imageElement);
+
 }
 
 // Function to display bounding boxes
-function displayDetections(image, detections) {
+function displayDetections(image) {
   const imageContainer = document.getElementById("image");
-  
+
   // Clear any previous bounding boxes
   const existingBoxes = imageContainer.querySelectorAll(".detection-box");
   existingBoxes.forEach(box => box.remove());
+
+  const btn = document.getElementById("detection-btn");
   
-  detections.detections.forEach(detection => {
-    const box = document.createElement("div");
-    box.className = "detection-box";
-    
-    // Get coordinates relative to the image
-    const boundingBox = detection.boundingBox;
-    
-    // Position the box
-    box.style.position = "absolute";
-    box.style.left = boundingBox.originX + "px";
-    box.style.top = boundingBox.originY + "px";
-    box.style.width = boundingBox.width + "px";
-    box.style.height = boundingBox.height + "px";
-    box.style.border = "2px solid red";
-    
-    // Add label
-    const label = document.createElement("div");
-    label.className = "detection-label";
-    label.textContent = `${detection.categories[0].categoryName} ${Math.round(detection.categories[0].score * 100)}%`;
-    label.style.position = "absolute";
-    label.style.top = "-25px";
-    label.style.left = "0px";
-    label.style.color = "red";
-    label.style.fontWeight = "bold";
-    
-    box.appendChild(label);
-    imageContainer.appendChild(box);
+  btn.addEventListener('click', () => {
+    const detections = objectDetector.detect(image);
+    detections.detections.forEach(detection => {
+      const box = document.createElement("div");
+      box.className = "detection-box";
+      
+      // Get coordinates relative to the image
+      const boundingBox = detection.boundingBox;
+      
+      // Position the box
+      // Get image position relative to its container
+      const imageRect = image.getBoundingClientRect();
+      const containerRect = imageContainer.getBoundingClientRect();
+      
+      // Calculate offset (the position of the image within the container)
+      const offsetX = imageRect.left - containerRect.left;
+      const offsetY = imageRect.top - containerRect.top;
+      
+      // Position the box relative to the image
+      box.style.position = "absolute";
+      box.style.left = (offsetX + boundingBox.originX) + "px";
+      box.style.top = (offsetY + boundingBox.originY) + "px";
+      box.style.width = boundingBox.width + "px";
+      box.style.height = boundingBox.height + "px";
+      box.style.border = "2px solid blue";
+      // Add label
+      const label = document.createElement("div");
+      label.className = "detection-label";
+      label.textContent = `${detection.categories[0].categoryName} ${Math.round(detection.categories[0].score * 100)}%`;
+      label.style.position = "absolute";
+      label.style.top = "-25px";
+      label.style.left = "0px";
+      label.style.color = "blue";
+      label.style.fontWeight = "bold";
+      
+      box.appendChild(label);
+      imageContainer.appendChild(box);
+    });
   });
 }
 
