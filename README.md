@@ -1,6 +1,6 @@
 # Google Mediapipe Vision - Object Detection
 
-This documentation outlines the workflow and provides a clear breakdown of the JavaScript code needed to implement object detection using Google's Mediapipe Vision Tasks.
+This documentation outlines the workflow and provides a clear breakdown of the JavaScript code needed to implement Object Detection model using Google's Mediapipe Object Detection Vision Task.
 
 ---
 
