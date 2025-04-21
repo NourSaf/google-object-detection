@@ -33,7 +33,7 @@ async function initializeObjectDetector() {
   } catch (error) {
     console.error("Error initializing object detector:", error);
   }
-}
+}_
 
 function performDetection(){
   const imageContainer = document.getElementById("image");
